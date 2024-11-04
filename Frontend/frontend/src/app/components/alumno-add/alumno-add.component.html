@@ -1,0 +1,62 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Crear Nuevo Alumno</h2>
+    <form #f="ngForm" (ngSubmit)="f.form.valid && crearAlumno()">
+        <!-- Nombre -->
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input [(ngModel)]="nuevoAlumno.nombre" 
+                   name="nombre" 
+                   type="text" 
+                   class="form-control" 
+                   id="nombre" 
+                   placeholder="Ingresa el nombre del alumno" 
+                   minlength="4" 
+                   maxlength="20" 
+                   required 
+                   #nombre="ngModel" 
+                   [ngClass]="{ 'is-invalid': f.submitted && nombre.errors }" />
+                   
+            <!-- Mensajes de error para el campo nombre -->
+            @if (f.submitted && nombre.errors) {
+                <div class="invalid-feedback">
+                    @if (nombre.errors['required']) {
+                        <div>El nombre es obligatorio</div>
+                    }
+                    @if (nombre.errors['minlength']) {
+                        <div>El nombre debe tener como mínimo 4 caracteres</div>
+                    }
+                    @if (nombre.errors['maxlength']) {
+                        <div>El nombre no puede tener más de 20 caracteres</div>
+                    }
+                </div>
+            }
+        </div>
+        <br>
+        
+        <!-- Fecha de Nacimiento -->
+        <div class="form-group">
+            <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+            <input [(ngModel)]="nuevoAlumno.fechaNacimiento" 
+                name="fechaNacimiento" 
+                type="date" 
+                class="form-control" 
+                id="fechaNacimiento" 
+                required 
+                #fechaNacimiento="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && fechaNacimiento.errors }" />
+                
+            <!-- Mensajes de error para el campo fecha de nacimiento -->
+            <div *ngIf="f.submitted && fechaNacimiento.errors">
+                <div class="invalid-feedback">
+                    <div *ngIf="fechaNacimiento.errors?.['required']">La fecha de nacimiento es obligatoria</div>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <br>
+        
+        <!-- Botón Guardar -->
+        <button type="submit" class="btn btn-success">Crear Alumno</button>
+    </form>
+</div>

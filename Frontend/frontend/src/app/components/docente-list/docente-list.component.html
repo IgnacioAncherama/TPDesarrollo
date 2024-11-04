@@ -1,0 +1,88 @@
+<br>
+<div>
+    <h2> Lista de Docente</h2>
+</div>
+
+<div>
+    <input [(ngModel)]="docenteId" type="number" placeholder="Ingrese ID del docente">
+    <button (click)="getDocenteById()">Buscar Docente</button>
+</div>
+<br>
+
+<!-- Mensaje de Docente Inexistente -->
+<h5 *ngIf="docenteNoEncontrado" style="color: red;">Docente Inexistente</h5>
+
+
+<!-- Tabla para mostrar la lista de docentes -->
+<table class="table table-docentes" *ngIf="docentes.length > 0">
+    <thead class="table-dark">
+        <tr>
+            <th>Numero de Docente</th>
+            <th>Nombre</th>
+            <th>Legajo</th>
+            <th>Eliminar</th>
+            <th>Modificar</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let docente of docentes">
+            <td>{{docente.id}}</td>
+            <td>{{docente.nombre}}</td>
+            <td>{{docente.legajo}}</td>
+            <td>
+                <button (click)="deleteDocenteById(docente.id)" class="btn btn-danger">Eliminar</button>
+            </td>
+            <td>
+                <button (click)="seleccionarDocente(docente)" class="btn btn-primary">Editar</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Mensaje cuando no hay docentes en la lista -->
+<p *ngIf="docentes.length === 0 && !docenteNoEncontrado">No hay docentes disponibles.</p>
+
+
+<!-- Si se selecciona un docente para editar, mostramos el formulario -->
+<div *ngIf="docenteSeleccionado" class="container mt-4">
+    <h2 class="mb-4">Editar Docente</h2>
+    <form (ngSubmit)="updateDocente()">
+        <!-- Nombre -->
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input [(ngModel)]="docenteSeleccionado.nombre" 
+                   name="nombre" 
+                   type="text" 
+                   class="form-control" 
+                   id="nombre" 
+                   placeholder="Ingresa el nombre" 
+                   required>
+        </div>
+
+        <!-- Legajo -->
+        <div class="mb-3">
+            <label for="legajo" class="form-label">Legajo:</label>
+            <input [(ngModel)]="docenteSeleccionado.legajo" 
+                   name="legajo" 
+                   type="number" 
+                   class="form-control" 
+                   id="legajo" 
+                   placeholder="Ingresa el legajo" 
+                   required
+                   min="0"
+                   step="1">
+        </div>
+
+
+        <!-- Botón Guardar Cambios -->
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+    <br>
+</div>
+
+<br>
+<!--
+<div>
+    <a routerLink="/docente-add" class="btn btn-success">Agregar Nuevo Docente</a>
+</div>
+-->

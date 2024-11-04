@@ -1,0 +1,28 @@
+<div class="container mt-4">
+    <h1>Buscar Alumnos de Cursos Vigentes</h1>
+  
+    <div class="mb-3">
+      <label for="docente" class="form-label">Seleccionar Docente</label>
+      <select id="docente" class="form-control" [(ngModel)]="selectedDocenteId" (ngModelChange)="onDocenteChange()">
+        <option value="" disabled selected>Seleccione un docente</option>
+        <option *ngFor="let docente of docentes" [value]="docente.id">{{ docente.nombre }}</option>
+      </select>
+    </div>
+  
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+      {{ errorMessage }}
+    </div>
+  
+    <ul class="list-group mt-3" *ngIf="alumnos.length > 0">
+      <li class="list-group-item" *ngFor="let alumno of alumnos">
+        <h5>{{ alumno.nombre }}</h5>
+        <p><strong>ID:</strong> {{ alumno.id }}</p> <!-- Si deseas mostrar el ID -->
+        <p><strong>Fecha de Nacimiento:</strong> {{ alumno.fechaNacimiento | date:'shortDate' }}</p> <!-- Muestra la fecha de nacimiento -->
+      </li>
+    </ul>
+  
+    <div *ngIf="alumnos.length === 0 && !errorMessage" class="alert alert-info">
+      No hay alumnos en los cursos vigentes.
+    </div>
+  </div>
+  

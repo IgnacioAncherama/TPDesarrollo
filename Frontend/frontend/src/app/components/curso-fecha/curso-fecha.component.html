@@ -1,0 +1,33 @@
+<div class="container mt-4">
+    <h1>Buscar Cursos por Fecha de Fin</h1>
+    <div class="mb-3">
+        <label for="fechaFin" class="form-label">Fecha de Fin</label>
+        <input type="date" id="fechaFin" class="form-control" [(ngModel)]="fechaFin">
+    </div>
+    <button class="btn btn-primary" (click)="buscarCursos()">Buscar</button>
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+        {{ errorMessage }}
+    </div>
+
+    <div *ngIf="notFoundMessage" class="alert alert-info mt-3">
+        {{ notFoundMessage }}
+    </div>
+
+    <ul class="list-group mt-3" *ngIf="cursos.length > 0">
+        <li class="list-group-item" *ngFor="let curso of cursos">
+            <h3>ID: {{ curso.id }}</h3>
+            <strong>Fecha de Inicio:</strong> {{ curso.fechaInicio | date:'shortDate' }}<br>
+            <strong>Fecha de Fin:</strong> {{ curso.fechaFin | date:'shortDate' }}<br>
+            <strong>Precio:</strong> {{ curso.precio | currency }}<br>
+            <strong>Docente:</strong> {{ curso.docente.nombre }}<br>
+            <strong>Tema:</strong> {{ curso.tema.nombre }}<br>
+            <strong>Alumnos:</strong> 
+            <ul>
+                <li *ngFor="let alumno of curso.alumnos">
+                    {{ alumno.nombre }}
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

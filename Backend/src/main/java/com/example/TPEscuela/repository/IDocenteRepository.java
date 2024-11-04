@@ -1,0 +1,12 @@
+package com.example.TPEscuela.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.example.TPEscuela.models.Docente;
+
+@Repository 
+public interface IDocenteRepository extends JpaRepository <Docente, Long>{
+	
+}
+

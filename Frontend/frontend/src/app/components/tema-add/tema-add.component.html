@@ -1,0 +1,53 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Crear Nuevo Tema</h2>
+    <form #f="ngForm" (ngSubmit)="crearTema()">
+        <!-- Nombre -->
+        <div class="form-group">
+            <label for="nombre">Nombre del Tema:</label>
+            <input [(ngModel)]="nuevoTema.nombre" 
+                   name="nombre" 
+                   type="text" 
+                   class="form-control" 
+                   id="nombre" 
+                   placeholder="Ingresa el nombre del tema" 
+                   minlength="4" 
+                   maxlength="20" 
+                   required 
+                   #nombre="ngModel" 
+                   [ngClass]="{'is-invalid': f.submitted && nombre.errors }" />
+                   
+            <!-- Mensajes de error para el campo nombre -->
+            <div *ngIf="f.submitted && nombre.errors" class="invalid-feedback">
+                <div *ngIf="nombre.errors?.['required']">El nombre es obligatorio</div>
+                <div *ngIf="nombre.errors?.['minlength']">El nombre debe tener al menos 4 caracteres</div>
+                <div *ngIf="nombre.errors?.['maxlength']">El nombre no puede tener más de 20 caracteres</div>
+            </div>
+        </div>
+        <br>
+        <!-- Descripción -->
+        <div class="form-group">
+            <label for="descripcion">Descripción del Tema:</label>
+            <input [(ngModel)]="nuevoTema.descripcion" 
+                   name="descripcion" 
+                   type="text" 
+                   class="form-control" 
+                   id="descripcion" 
+                   placeholder="Ingresa la descripción del tema" 
+                   minlength="10" 
+                   maxlength="100" 
+                   required 
+                   #descripcion="ngModel" 
+                   [ngClass]="{'is-invalid': f.submitted && descripcion.errors }" />
+                   
+            <!-- Mensajes de error para el campo descripción -->
+            <div *ngIf="f.submitted && descripcion.errors" class="invalid-feedback">
+                <div *ngIf="descripcion.errors?.['required']">La descripción es obligatoria</div>
+                <div *ngIf="descripcion.errors?.['minlength']">La descripción debe tener al menos 10 caracteres</div>
+                <div *ngIf="descripcion.errors?.['maxlength']">La descripción no puede tener más de 100 caracteres</div>
+            </div>
+        </div>
+        <br>
+        <!-- Botón Guardar -->
+        <button type="submit" class="btn btn-success">Crear Tema</button>
+    </form>
+</div>

@@ -1,0 +1,64 @@
+<div class="curso-add-container">
+  <h2>Agregar Nuevo Curso</h2>
+
+  <form (ngSubmit)="agregarCurso()">
+    <!-- Fecha de Inicio -->
+    <div class="mb-3">
+      <label for="fechaInicio" class="form-label">Fecha de Inicio:</label>
+      <input type="date" id="fechaInicio" [(ngModel)]="nuevoCurso.fechaInicio" 
+      name="fechaInicio" class="form-control" 
+      required />
+    </div>
+
+    <!-- Fecha de Fin -->
+    <div class="mb-3">
+      <label for="fechaFin" class="form-label">Fecha de Fin:</label>
+      <input type="date" id="fechaFin" [(ngModel)]="nuevoCurso.fechaFin" name="fechaFin" class="form-control" required />
+    </div>
+
+    <!-- Precio -->
+    <div class="mb-3">
+      <label for="precio" class="form-label">Precio:</label>
+      <input type="number" id="precio" [(ngModel)]="nuevoCurso.precio" name="precio" class="form-control" required />
+    </div>
+
+    <!-- Docente -->
+    <div class="mb-3">
+      <label for="docente" class="form-label">Docente:</label>
+      <select id="docente" [(ngModel)]="nuevoCurso.docente.id" name="docenteId" class="form-control" required>
+        <option *ngFor="let docente of docentes" [value]="docente.id">{{ docente.nombre }}</option>
+      </select>
+    </div>
+
+    <!-- Tema -->
+    <div class="mb-3">
+      <label for="tema" class="form-label">Tema:</label>
+      <select id="tema" [(ngModel)]="nuevoCurso.tema.id" name="temaId" class="form-control" required>
+        <option *ngFor="let tema of temas" [value]="tema.id">{{ tema.nombre }}</option>
+      </select>
+    </div>
+
+    <!-- Alumnos Asignados -->
+    <div class="mb-3">
+      <label class="form-label">Alumnos Asignados (Selecciona para eliminar):</label>
+      <div *ngFor="let alumno of nuevoCurso.alumnos">
+        <input type="radio" name="alumnoEliminar" [(ngModel)]="alumnoSeleccionadoEliminar" [value]="alumno.id">
+        {{ alumno.nombre }}
+      </div>
+      <button type="button" class="btn btn-danger" (click)="eliminarAlumno()">Eliminar Alumno</button>
+    </div>
+
+    <!-- Alumnos Disponibles -->
+    <div class="mb-3">
+      <label class="form-label">Agregar Alumnos (Selecciona para agregar):</label>
+      <div *ngFor="let alumno of alumnosDisponibles">
+        <input type="radio" name="alumnoAgregar" [(ngModel)]="alumnoSeleccionadoAgregar" [value]="alumno.id">
+        {{ alumno.nombre }}
+      </div>
+      <button type="button" class="btn btn-primary" (click)="agregarAlumno(alumnoSeleccionadoAgregar)">Agregar Alumno</button>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Agregar Curso</button>
+  </form>
+</div>
+  

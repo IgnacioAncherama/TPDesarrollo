@@ -1,0 +1,134 @@
+/* General */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: #06060b; /* Fondo principal oscuro (color1) */
+    border-radius: 0.25rem;
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    color: #2bcac8 !important; /* Texto (color5) */
+    font-weight: bold;
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: #ecf0f1 !important;
+    font-weight: 500;
+    padding: 0.75rem 1.25rem;
+}
+
+/* Hover effect for dropdown */
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.navbar-nav .nav-item .dropdown-menu {
+    background-color: #0f3144; /* Fondo del dropdown (color2) */
+    border: none;
+    margin-top: 0; 
+    border-radius: 0.25rem;
+}
+
+.navbar-nav .nav-item .dropdown-menu .dropdown-item {
+    color: #ecf0f1; /* Texto del dropdown */
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+}
+
+.navbar-nav .nav-item .dropdown-menu .dropdown-item:hover {
+    background-color: #2bcac8; /* Color al pasar el mouse (color5) */
+    color: #fff;
+}
+
+/* Card Styling */
+.card {
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #1d608d; /* Botón (color3) */
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.3rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #2bcac8; /* Hover en botón (color5) */
+    color: #fff;
+}
+
+/* Navbar Dropdown Styling */
+.dropdown-toggle::after {
+    margin-left: 0.5rem;
+    border-top-color: #fff !important; /* Flecha blanca */
+}
+
+/* Navbar Hover Effect */
+.navbar-nav .nav-item:hover .nav-link {
+    background-color: #2bcac8; /* Verde suave (color5) al pasar sobre los enlaces principales */
+    color: #fff !important;
+    border-radius: 0.25rem;
+}
+
+/* Misc */
+.container-fluid {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.container__menu ul {
+    list-style-type: none;
+}
+
+.container__menu ul li a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.container__menu ul li ul {
+    display: none;
+}
+
+.container__menu ul li:hover ul {
+    display: block;
+    position: absolute;
+    background-color: #0f3144; /* Fondo desplegable (color2) */
+    padding: 0;
+}
+
+.container__menu ul li ul li {
+    margin: 0;
+    padding: 0;
+}
+
+.container__menu ul li ul li a {
+    padding: 0.5rem 1rem;
+    display: block;
+    color: #ecf0f1;
+}
+
+.container__menu ul li ul li a:hover {
+    background-color: #2b98c8; /* Hover sobre las opciones (color4) */
+    color: #fff;
+}
+
+.dropdown-menu.show {
+    display: block;
+}

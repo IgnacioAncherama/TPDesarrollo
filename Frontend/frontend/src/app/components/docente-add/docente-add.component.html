@@ -1,0 +1,55 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Crear Nuevo Docente</h2>
+    <form #f="ngForm" (ngSubmit)="crearDocente()">
+        <!-- Nombre -->
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input [(ngModel)]="nuevoDocente.nombre"
+                   id="nombre"
+                   minlength="4"
+                   maxlength="25"
+                   name="nombre"
+                   type="text"
+                   class="form-control"
+                   placeholder="Ingresa el nombre"
+                   required
+                   #nombre="ngModel"
+                   [ngClass]="{'is-invalid': f.submitted && nombre.errors }" />
+                   
+            <!-- Mensajes de error para el campo nombre -->
+            <div *ngIf="f.submitted && nombre.errors" class="invalid-feedback">
+                <div *ngIf="nombre.errors?.['required']">El nombre es obligatorio</div>
+                <div *ngIf="nombre.errors?.['minlength']">El nombre debe tener al menos 4 caracteres</div>
+                <div *ngIf="nombre.errors?.['maxlength']">El nombre no puede tener más de 25 caracteres</div>
+            </div>
+        </div>
+        <br>
+        
+        <!-- Legajo -->
+        <div class="form-group">
+            <label for="legajo">Legajo:</label>
+            <input [(ngModel)]="nuevoDocente.legajo"
+                   id="legajo"
+                   minlength="2"
+                   maxlength="10"
+                   name="legajo"
+                   type="number"
+                   class="form-control"
+                   placeholder="Ingresa el legajo"
+                   required
+                   #legajo="ngModel"
+                   [ngClass]="{'is-invalid': f.submitted && legajo.errors }" />
+                   
+            <!-- Mensajes de error para el campo legajo -->
+            <div *ngIf="f.submitted && legajo.errors" class="invalid-feedback">
+                <div *ngIf="legajo.errors?.['required']">El legajo es obligatorio</div>
+                <div *ngIf="legajo.errors?.['minlength']">El legajo debe tener al menos 2 caracteres</div>
+                <div *ngIf="legajo.errors?.['maxlength']">El legajo no puede tener más de 10 caracteres</div>
+            </div>
+        </div>
+        <br>
+        
+        <!-- Botón Guardar -->
+        <button type="submit" class="btn btn-success">Crear Docente</button>
+    </form>
+</div>
