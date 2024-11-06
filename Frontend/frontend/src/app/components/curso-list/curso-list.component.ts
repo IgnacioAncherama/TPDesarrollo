@@ -61,6 +61,10 @@ export class CursoListComponent implements OnInit {
 
   
   getCursoById(): void {
+    if (this.cursoId <= 0){
+      alert('El ID debe ser mayor a 0');
+      return;
+    }
     if (this.cursoId > 0) {
       this.cursoService.getById(this.cursoId).subscribe({
         next: (curso) => {

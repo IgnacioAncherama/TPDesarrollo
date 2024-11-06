@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 export class AlumnoAddComponent {
   nuevoAlumno: Alumno = { nombre: '', fechaNacimiento: new Date() };
   alumnos: Alumno[] = [];
+  errorMessage: string = "";
 
   constructor(private alumnosService: AlumnoService) {}
 

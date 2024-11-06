@@ -7,9 +7,9 @@ import { routes } from './app.routes';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,RouterLink, AlumnoListComponent, CursoListComponent], // Cambia HttpClient a HttpClientModule
+  imports: [RouterOutlet,RouterLink, AlumnoListComponent, CursoListComponent], 
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'] // Corrige styleUrl a styleUrls
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'front';

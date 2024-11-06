@@ -38,7 +38,7 @@ public class Curso {
     @JoinColumn(name = "Docente_id", referencedColumnName = "id")
     private Docente docente;
 
-	@ManyToMany(fetch = FetchType.EAGER)  // SEGUN SERGIO: @ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "curso_alumno",
 			joinColumns = @JoinColumn(name = "curso_id"),

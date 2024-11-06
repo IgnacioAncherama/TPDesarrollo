@@ -46,9 +46,8 @@
                 [ngClass]="{ 'is-invalid': f.submitted && fechaNacimiento.errors }" />
                 
             <!-- Mensajes de error para el campo fecha de nacimiento -->
-            <div *ngIf="f.submitted && fechaNacimiento.errors">
-                <div class="invalid-feedback">
-                    <div *ngIf="fechaNacimiento.errors?.['required']">La fecha de nacimiento es obligatoria</div>
+            <div *ngIf="f.submitted && !nuevoAlumno.fechaNacimiento" class ="error">
+                <div class="invalid-feedback">La fecha de nacimiento es obligatoria
                 </div>
             </div>
         </div>

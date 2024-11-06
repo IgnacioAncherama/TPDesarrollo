@@ -87,12 +87,17 @@
       <div class="mb-3">
         <label for="precio" class="form-label">Precio:</label>
         <input [(ngModel)]="cursoSeleccionado.precio" 
-              name="precio" 
-              type="number" 
-              class="form-control" 
-              id="precio" 
-              required>
+               name="precio" 
+               type="number" 
+               class="form-control" 
+               id="precio" 
+               required>
+        
+        <div *ngIf="cursoSeleccionado.precio < 0" class="alert alert-danger mt-2">
+          El precio no puede ser negativo.
+        </div>
       </div>
+      
 
       <!-- Alumnos Inscritos -->
       <div class="mb-3">

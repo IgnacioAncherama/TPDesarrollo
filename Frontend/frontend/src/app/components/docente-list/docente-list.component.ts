@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Docente } from '../../models/docente.model';
 import { DocenteService } from '../../services/docente.service';
+import { CursoService } from '../../services/curso.service';
 
 @Component({
   selector: 'app-docente-list',
@@ -18,7 +19,9 @@ export class DocenteListComponent {
     docenteSeleccionado: Docente | null = null;
     
   
-    constructor(private docenteServices: DocenteService){}
+    constructor(private docenteServices: DocenteService,
+                private cursoService: CursoService
+    ){}
   
     ngOnInit(): void {
       // Cargar todos los docentes al iniciar el componente
@@ -39,6 +42,10 @@ export class DocenteListComponent {
     }
   
     getDocenteById(): void {
+      if (this.docenteId <= 0){
+        alert('El ID debe ser mayor a 0');
+        return;
+      }
       if (this.docenteId > 0) {
         this.docenteServices.getById(this.docenteId).subscribe({
           next: (docente) => {
@@ -65,22 +72,39 @@ export class DocenteListComponent {
     }
   
     // Método para eliminar un docente por ID
-    deleteDocenteById(id: number | undefined): void {
-      if (id !== undefined) {
-        this.docenteServices.deleteById(id).subscribe({
-          next: () => {
-            this.docentes = this.docentes.filter(docente => docente.id !== id);
-            alert('Docente eliminado correctamente');
-          },
-          error: (err) => {
-            console.error('Error al eliminar el docente:', err);
-            alert('Error al eliminar el docente');
-          }
-        });
-      } else {
-        alert('ID de docente no válido');
+deleteDocenteById(id: number | undefined): void {
+  if (id !== undefined) {
+    // Primero, verifica si el docente está asociado a algún curso
+    this.cursoService.getAll().subscribe({
+      next: (cursos) => {
+        const docenteEnCurso = cursos.some(curso => curso.docente.id === id);
+        
+        if (docenteEnCurso) {
+          alert('No se puede eliminar el docente porque está asociado a uno o más cursos.');
+        } else {
+          // Si el docente no está asociado a ningún curso, procede con la eliminación
+          this.docenteServices.deleteById(id).subscribe({
+            next: () => {
+              this.docentes = this.docentes.filter(docente => docente.id !== id);
+              alert('Docente eliminado correctamente');
+            },
+            error: (err) => {
+              console.error('Error al eliminar el docente:', err);
+              alert('Error al eliminar el docente');
+            }
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Error al verificar los cursos:', err);
+        alert('Error al verificar los cursos del docente.');
       }
-    }
+    });
+  } else {
+    alert('ID de docente no válido');
+  }
+}
+
     
     // Seleccionar un docente para edición
     seleccionarDocente(docente: Docente): void {

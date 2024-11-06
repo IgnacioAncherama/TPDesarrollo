@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TemaService } from '../../services/tema.service';
 import { Tema } from '../../models/tema.model';
+import { CursoService } from '../../services/curso.service';
 
 @Component({
   selector: 'app-tema-list',
@@ -18,7 +19,9 @@ export class TemaListComponent {
   temaSeleccionado: Tema | null = null;
   
 
-  constructor(private temaServices: TemaService){}
+  constructor(private temaServices: TemaService,
+              private cursoServices:CursoService
+  ){}
 
   ngOnInit(): void {
     // Cargar todos los temas al iniciar el componente
@@ -39,6 +42,10 @@ export class TemaListComponent {
   }
 
   getTemaById(): void {
+    if (this.temaId <= 0){
+      alert('El ID debe ser mayor a 0');
+      return;
+    }
     if (this.temaId > 0) {
       this.temaServices.getById(this.temaId).subscribe({
         next: (tema) => {
@@ -67,20 +74,37 @@ export class TemaListComponent {
   // Método para eliminar un tema por ID
   deletetemaById(id: number | undefined): void {
     if (id !== undefined) {
-      this.temaServices.deleteById(id).subscribe({
-        next: () => {
-          this.temas = this.temas.filter(tema => tema.id !== id);
-          alert('Tema eliminado correctamente');
+      // Primero, verifica si el tema está asociado a algún curso
+      this.cursoServices.getAll().subscribe({
+        next: (cursos) => {
+          const temaEnCurso = cursos.some(curso => curso.tema.id === id);
+          
+          if (temaEnCurso) {
+            alert('No se puede eliminar el tema porque está asociado a uno o más cursos.');
+          } else {
+            // Si el tema no está asociado a ningún curso, procede con la eliminación
+            this.temaServices.deleteById(id).subscribe({
+              next: () => {
+                this.temas = this.temas.filter(tema => tema.id !== id);
+                alert('Tema eliminado correctamente');
+              },
+              error: (err) => {
+                console.error('Error al eliminar el tema:', err);
+                alert('Error al eliminar el tema');
+              }
+            });
+          }
         },
         error: (err) => {
-          console.error('Error al eliminar el tema:', err);
-          alert('Error al eliminar el tema');
+          console.error('Error al verificar los cursos:', err);
+          alert('Error al verificar los cursos del tema.');
         }
       });
     } else {
       alert('ID de tema no válido');
     }
   }
+
 
   // Seleccionar un tema para edición
   seleccionartema(tema: Tema): void {

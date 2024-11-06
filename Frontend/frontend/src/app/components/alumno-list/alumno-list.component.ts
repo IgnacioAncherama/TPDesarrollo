@@ -3,6 +3,7 @@ import { Alumno } from '../../models/alumno.model';
 import { CommonModule } from '@angular/common';
 import { AlumnoService } from '../../services/alumno.service';
 import { FormsModule } from '@angular/forms';
+import { CursoService } from '../../services/curso.service';
 
 @Component({
   selector: 'app-alumno-list',
@@ -18,7 +19,9 @@ export class AlumnoListComponent implements OnInit {
   alumnoSeleccionado: Alumno | null = null;
   
 
-  constructor(private alumnosService: AlumnoService) {}
+  constructor(private alumnosService: AlumnoService,
+              private cursoService: CursoService
+  ) {}
 
   ngOnInit(): void {
     // Cargar todos los alumnos al iniciar el componente
@@ -39,6 +42,10 @@ export class AlumnoListComponent implements OnInit {
   }
 
   getAlumnoById(): void {
+    if (this.alumnoId <= 0){
+      alert('El ID debe ser mayor a 0');
+      return;
+    }
     if (this.alumnoId > 0) {
       this.alumnosService.getById(this.alumnoId).subscribe({
         next: (alumno) => {
@@ -65,20 +72,37 @@ export class AlumnoListComponent implements OnInit {
   // Método para eliminar un alumno por ID
   deleteAlumnoById(id: number | undefined): void {
     if (id !== undefined) {
-      this.alumnosService.deleteById(id).subscribe({
-        next: () => {
-          this.alumnos = this.alumnos.filter(alumno => alumno.id !== id);
-          alert('Alumno eliminado correctamente');
+      // Verificar si el alumno está inscrito en algún curso
+      this.cursoService.getAll().subscribe({
+        next: (cursos) => {
+          const estaEnCurso = cursos.some(curso => curso.alumnos.some(alumno => alumno.id === id));
+          
+          if (estaEnCurso) {
+            alert('No se puede eliminar el alumno porque está inscrito en uno o más cursos.');
+          } else {
+            // Si no está inscrito, proceder a eliminar
+            this.alumnosService.deleteById(id).subscribe({
+              next: () => {
+                this.alumnos = this.alumnos.filter(alumno => alumno.id !== id);
+                alert('Alumno eliminado correctamente');
+              },
+              error: (err) => {
+                console.error('Error al eliminar el alumno:', err);
+                alert('Error al eliminar el alumno');
+              }
+            });
+          }
         },
         error: (err) => {
-          console.error('Error al eliminar el alumno:', err);
-          alert('Error al eliminar el alumno');
+          console.error('Error al verificar los cursos del alumno:', err);
+          alert('Error al verificar los cursos del alumno');
         }
       });
     } else {
       alert('ID de alumno no válido');
     }
   }
+
 
   // Seleccionar un alumno para edición
   seleccionarAlumno(alumno: Alumno): void {

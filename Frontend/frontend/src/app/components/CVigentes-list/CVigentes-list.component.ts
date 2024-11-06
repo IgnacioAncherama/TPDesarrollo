@@ -43,19 +43,20 @@ onDocenteChange() {
 
 obtenerAlumnosDeCursosVigentes() {
   if (this.selectedDocenteId) {
-    this.docenteService.getAlumnosDeCursosVigentes(this.selectedDocenteId).subscribe(
-      (data) => {
+    this.docenteService.getAlumnosDeCursosVigentes(this.selectedDocenteId).subscribe({
+      next: (data) => {
         console.log('Datos recibidos:', data);
         this.alumnos = data.flatMap(curso => curso.alumnos); // Aplanar la lista de alumnos
         this.errorMessage = null; // Limpiar mensaje de error
       },
-      (error) => {
+      error: (error) => {
         this.errorMessage = 'Error al obtener alumnos. Inténtalo de nuevo más tarde.';
         console.error('Error al obtener alumnos:', error);
       }
-    );
+    });
   }
 }
+
 
   
   

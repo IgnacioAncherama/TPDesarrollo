@@ -6,14 +6,12 @@ export class Alumno {
         this.id = 0;
         this.nombre = '';
         this.fechaNacimiento = new Date();
-        //this.cursos = [];
 
     }
 
     id? : number;
     nombre: string;
     fechaNacimiento: Date;
-    //cursos: Curso[];
 
 }
 

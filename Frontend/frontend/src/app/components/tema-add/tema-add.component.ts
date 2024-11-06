@@ -19,7 +19,6 @@ export class TemaAddComponent {
 
   crearTema(): void {
     if (this.nuevoTema.nombre && this.nuevoTema.descripcion) {
-      // No enviamos el `id`, ya que será asignado automáticamente por el backend
       this.nuevoTema.descripcion = this.nuevoTema.descripcion;
   
       this.temaService.create(this.nuevoTema).subscribe({

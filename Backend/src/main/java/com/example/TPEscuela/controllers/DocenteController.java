@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Optional;
 
 
-import com.example.TPEscuela.models.Curso_alumnosDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -91,13 +90,6 @@ public class DocenteController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-
-	/*
-	Consigna:
-	También es necesario un endpoint para que el profesor pueda conocer su curso,
-	esto sería que el endpoint debe mostrar los alumnos del curso vigente de un profesor.
-	 */
-
 	@GetMapping("/{id}/cursosVigentes/alumnos")
 	public ResponseEntity<List<Map<String, Object>>> getAlumnosDeCursosVigentes(@PathVariable("id") Long docenteId) {
 		List<Map<String, Object>> cursosConAlumnos = cursoService.getCursosVigentesConAlumnos(docenteId);

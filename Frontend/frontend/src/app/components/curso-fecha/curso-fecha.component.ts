@@ -20,28 +20,30 @@ export class CursoFechaComponent {
   constructor(private cursoService: CursoService) {}
 
   buscarCursos() {
-      this.errorMessage = null; 
-      this.notFoundMessage = null; 
+    this.errorMessage = null;
+    this.notFoundMessage = null;
 
-      if (this.fechaFin) {
-          // Asegúrate de que fechaFin sea un objeto Date
-          const fechaFinString = new Date(this.fechaFin).toISOString().split('T')[0]; // Formato YYYY-MM-DD
+    // Si no se seleccionó una fecha, emite un mensaje y termina el proceso
+    if (!this.fechaFin) {
+        this.errorMessage = 'Por favor, selecciona una fecha.';
+        return; // Finaliza la ejecución del método
+    }
 
-          this.cursoService.getCursosByFechaFin(fechaFinString).subscribe(
-              (cursos) => {
-                  this.cursos = cursos;
+    const fechaFinString = new Date(this.fechaFin).toISOString().split('T')[0]; // Formato YYYY-MM-DD
 
-                  // Verificar si no se encontraron cursos
-                  if (this.cursos.length === 0) {
-                      this.notFoundMessage = 'No se encontraron cursos en la fecha indicada.';
-                  }
-              },
-              (error) => {
-                  this.errorMessage = 'Error al buscar cursos. Inténtalo de nuevo más tarde.';
-              }
-          );
-      } else {
-          this.errorMessage = 'Por favor, selecciona una fecha.';
-      }
-  }
+    this.cursoService.getCursosByFechaFin(fechaFinString).subscribe({
+        next: (cursos) => {
+            this.cursos = cursos;
+
+            // Verificar si no se encontraron cursos
+            if (this.cursos.length === 0) {
+                this.notFoundMessage = 'No se encontraron cursos en la fecha indicada.';
+            }
+        },
+        error: (error) => {
+            this.errorMessage = 'Error al buscar cursos. Inténtalo de nuevo más tarde.';
+        }
+    });
+}
+
 }
